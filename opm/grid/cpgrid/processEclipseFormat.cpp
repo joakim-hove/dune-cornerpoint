@@ -731,13 +731,17 @@ namespace cpgrid
                 if (nncpair.first < 0 || nncpair.second < 0 ||
                     nncpair.first >= static_cast<int>(global_to_local.size()) ||
                     nncpair.second >= static_cast<int>(global_to_local.size())) {
+#ifdef HAVE_ECL_INPUT
                     Opm::OpmLog::warning("nnc_invalid", "NNC connection requested between invalid cells.");
+#endif
                     continue;
                 }
                 const int c1 = global_to_local[nncpair.first];
                 const int c2 = global_to_local[nncpair.second];
                 if (c1 < 0 || c2 < 0) {
+#ifdef HAVE_ECL_INPUT
                     Opm::OpmLog::warning("nnc_inactive", "NNC connection requested between inactive cells.");
+#endif
                     continue;
                 }
                 const auto beg = std::lower_bound(face_cells.begin(), face_cells.end(), std::make_pair(c1, -1));
